@@ -13,10 +13,51 @@
  ******************************************************************************/
 package org.qeo.sms.rest.client;
 
+import java.util.ArrayList;
+
+import org.qeo.sms.rest.models.Device;
+import org.qeo.sms.rest.models.Policy;
+import org.qeo.sms.rest.models.Realm;
+import org.qeo.sms.rest.models.User;
+
 /**
  * 
  */
 public interface ISmsRestClient
 {
 
+    /**
+     * Retrieve all Realms of a Qeo Administrator.
+     * 
+     * @return a list of Realms
+     */
+    public ArrayList<Realm> getRealms();
+
+    /**
+     * Retrieve all Users within a Realm of a Qeo Administrator.
+     * 
+     * @return a list of Users
+     */
+    public ArrayList<User> getUsers(long realmId);
+
+    /**
+     * Retrieve all Devices within a Realm of a Qeo Administrator.
+     * 
+     * @return a list of Devices
+     */
+    public ArrayList<Device> getDevices(long realmId);
+
+    /**
+     * Retrieve the Policy of every User in the Realm of a Qeo Administrator.
+     * 
+     * @return a list of Policies
+     */
+    public ArrayList<Policy> getPolicies(long realmId);
+
+    /**
+     * Retrieve the Policy of a single User in the Realm of a Qeo Administrator.
+     * 
+     * @return the Policy for that user
+     */
+    public Policy getPolicyUser(long realmId, long userId);
 }
