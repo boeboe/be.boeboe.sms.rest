@@ -1,0 +1,12 @@
+lib/build/*
+.classpath
+.settings
+.project
+.checkstyle
+*.log
+*.swp
+bin/
+eclipse/
+.gradle
+output/
+

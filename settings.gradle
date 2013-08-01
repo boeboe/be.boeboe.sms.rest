@@ -1,4 +1,4 @@
-include 'java/lib'
+include 'java-lib'
 // prepend root project name to all child project names..
 rootProject.name = 'rest-sms-client'
 rootProject.children.each { it.name = rootProject.name + '-' + it.name }
