@@ -1,0 +1,2 @@
+//The artifactory.gradle file will be used as a helper function in order to use the functionality of artifactory.
+apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/artifactory.gradle'

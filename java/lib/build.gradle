@@ -1,0 +1,37 @@
+apply plugin: 'java'
+//The emma.gradle file is needed to be able to check for code coverage.
+apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/emma.gradle'
+//The checkstyle.gradle file is needed to configure checkstyle with the correct configuration file.
+apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/checkstyle.gradle'
+//Apply plugins.
+apply plugin: 'findbugs'
+apply plugin: 'eclipse'
+
+group = 'org.qeo'
+version = '0.0.0-SNAPSHOT'
+
+/*
+ignoreFailures is used to not let the build fail when there are 
+failing tests. This will allow us to keep using the tests to validate
+the behavior, without having the build fail constantly.
+TODO We do want to get rid of the ignoreFailures functionality.
+*/
+test {
+  ignoreFailures = true
+}
+findbugsMain {
+  ignoreFailures = true
+}
+
+findbugsTest {
+  ignoreFailures = true
+}
+
+/*
+Compile and runtime dependencies have to be declared here.
+*/
+dependencies {
+  compile 'org.apache.httpcomponents:httpclient:4.2.5'
+  compile 'org.json:json:20090211'
+  //compile     group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.2'
+}
