@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -79,14 +81,14 @@ public class SmsRestUtils
     }
 
     /**
-     * A helper method to convert multi dimensional JSONArrays to ObjectArrays of Class clazz.
+     * A helper method to convert JSONArrays to ObjectArrays of Class clazz.
      * 
      * @param jsonArray the JSONArray to convert
      * @return clazzArray and array of Objects from type clazz
      * @throws JSONException exception during JSON parsing
      */
     @SuppressWarnings("unchecked")
-    public static <K> K[] getObjectArray(JSONArray jsonArray, Class<K> clazz)
+    public static <K> ArrayList<K> getObjectArray(JSONArray jsonArray, Class<K> clazz)
     {
         K[] result = (K[]) Array.newInstance(clazz, jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -97,6 +99,6 @@ public class SmsRestUtils
                 e.printStackTrace();
             }
         }
-        return result;
+        return new ArrayList<K>(Arrays.asList(result));
     }
 }

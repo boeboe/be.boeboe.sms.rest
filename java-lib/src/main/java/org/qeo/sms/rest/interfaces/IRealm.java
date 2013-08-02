@@ -26,14 +26,14 @@ public interface IRealm
 {
 
     /**
-     * Retrieve all Realms of a Qeo Administrator.
+     * Retrieve all realms of a Qeo administrator.
      * 
      * @return a list of Realms
      */
     public ArrayList<Realm> getRealms();
 
     /**
-     * Create a single Realm of a Qeo administrator.
+     * Create a single realm of a Qeo administrator.
      * 
      * @param realmName the name you want to assign to the realm
      * @return the new realm
@@ -43,7 +43,7 @@ public interface IRealm
         throws MaxRealmReachedException;
 
     /**
-     * Modify a single Realm of a Qeo administrator.
+     * Modify a single realm of a Qeo administrator.
      * 
      * @param realmId the id the realm to be modified
      * @param realmName the name you want to assign to the realm
@@ -53,7 +53,7 @@ public interface IRealm
         throws UnknownRealmIdException;
 
     /**
-     * Delete a single Realm of a Qeo administrator.
+     * Delete a single realm of a Qeo administrator.
      * 
      * @param realmId the id the realm to be deleted
      * @throws UnknownRealmIdException when an unknown realm id is used
