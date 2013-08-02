@@ -145,6 +145,24 @@ public class SmsRestClient
     }
 
     @Override
+    public ArrayList<Device> getDevices(long realmId, long userId)
+    {
+        ArrayList<Device> deviceList = new ArrayList<>();
+
+        URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/devices?users=" + userId);
+        JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);
+
+        try {
+            deviceList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("devices"), Device.class);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return deviceList;
+    }
+
+    @Override
     public Device createDevice(long realmId, long userId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException
     {

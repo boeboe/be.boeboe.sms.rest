@@ -39,10 +39,18 @@ public class SmsRestClientTest
             System.out.println(realm);
 
             long realmId = realm.getId();
+
             ArrayList<User> userList = smsClient.getUsers(realmId);
             for (User user : userList) {
                 System.out.println(user);
+
+                long userId = user.getId();
+                ArrayList<Device> devicePerUserList = smsClient.getDevices(realmId, userId);
+                for (Device deviceUser : devicePerUserList) {
+                    System.out.println("<user: " + userId + "> " + deviceUser);
+                }
             }
+
             ArrayList<Device> deviceList = smsClient.getDevices(realmId);
             for (Device device : deviceList) {
                 System.out.println(device);

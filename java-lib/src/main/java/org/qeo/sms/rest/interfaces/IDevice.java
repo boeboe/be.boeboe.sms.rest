@@ -26,11 +26,21 @@ public interface IDevice
 {
 
     /**
-     * Retrieve all Devices within a Realm of a Qeo Administrator.
+     * Retrieve all devices within a realm of a Qeo Administrator.
      * 
+     * @param realmId the id of the realm
      * @return a list of Devices
      */
     public ArrayList<Device> getDevices(long realmId);
+
+    /**
+     * Retrieve all devices from a certain user within a realm of a Qeo Administrator.
+     * 
+     * @param realmId the id of the realm
+     * @param userId the id of the user
+     * @return a list of Devices
+     */
+    public ArrayList<Device> getDevices(long realmId, long userId);
     
     /**
      * @param realmId the id the realm where the device is added
