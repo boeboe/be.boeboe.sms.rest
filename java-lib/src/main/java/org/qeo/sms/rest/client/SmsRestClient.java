@@ -8,8 +8,10 @@ import org.json.JSONObject;
 import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
 import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.interfaces.IDevice;
 import org.qeo.sms.rest.interfaces.IRealm;
 import org.qeo.sms.rest.interfaces.IUser;
+import org.qeo.sms.rest.models.Device;
 import org.qeo.sms.rest.models.Realm;
 import org.qeo.sms.rest.models.User;
 
@@ -31,7 +33,7 @@ import org.qeo.sms.rest.models.User;
  * 
  */
 public class SmsRestClient
-    implements IRealm, IUser
+    implements IRealm, IUser, IDevice
 {
     private final static String BASE_URI = "http://join.qeodev.org:8080/qeo-rest-service/v1";
     private final static String REALMS_URI = BASE_URI + "/realms";
@@ -124,4 +126,43 @@ public class SmsRestClient
 
     }
 
+    @Override
+    public ArrayList<Device> getDevices(long realmId)
+    {
+        ArrayList<Device> deviceList = new ArrayList<>();
+
+        URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
+        JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);
+
+        try {
+            deviceList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("devices"), Device.class);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return deviceList;
+    }
+
+    @Override
+    public Device createDevice(long realmId, long userId, String deviceName)
+        throws UnknownRealmIdException, UnknownRealmUserException
+    {
+        return null;
+    }
+
+
+    @Override
+    public void modifyDevice(long realmId, long userId, long deviceId, String deviceName)
+        throws UnknownRealmIdException, UnknownRealmUserException
+    {
+
+    }
+
+    @Override
+    public void deleteDevice(long realmId, long userId, long deviceId)
+        throws UnknownRealmIdException, UnknownRealmUserException
+    {
+
+    }
 }

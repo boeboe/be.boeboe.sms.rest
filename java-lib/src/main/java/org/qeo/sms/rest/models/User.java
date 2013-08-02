@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
+ * Qeo User.
  */
 public class User
 {
@@ -52,16 +52,16 @@ public class User
      * 
      * { "name" : "Adam", "id" : 1643, "type" : "user", "realm" : 6575425569096907932 }
      * 
-     * @param realmJson JSON representation of a realm
+     * @param userJson JSON representation of a user
      * @throws JSONException
      */
-    public User(JSONObject realmJson)
+    public User(JSONObject userJson)
         throws JSONException
     {
-        mId = realmJson.getLong(ID);
-        mType = realmJson.getString(TYPE);
-        mName = realmJson.getString(NAME);
-        mRealmId = realmJson.getLong(REALM);
+        mId = userJson.getLong(ID);
+        mType = userJson.getString(TYPE);
+        mName = userJson.getString(NAME);
+        mRealmId = userJson.getLong(REALM);
     }
 
     /**

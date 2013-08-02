@@ -17,7 +17,7 @@ package org.qeo.sms.rest.models;
  * 
  */
 public enum DeviceState {
-    CREATING, ENROLLED, REVOKED;
+    CREATING, ENROLLED, REVOKED, CREATE_FAILED;
 
     @Override
     public String toString()

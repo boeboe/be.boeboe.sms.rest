@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
+ * Qeo Realm.
  */
 public class Realm
 {

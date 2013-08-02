@@ -15,6 +15,7 @@ package org.qeo.sms.rest.client;
 
 import java.util.ArrayList;
 
+import org.qeo.sms.rest.models.Device;
 import org.qeo.sms.rest.models.Realm;
 import org.qeo.sms.rest.models.User;
 
@@ -24,7 +25,7 @@ import org.qeo.sms.rest.models.User;
 public class SmsRestClientTest
 {
 
-    public final static String ACCESS_TOKEN = "3224fc930632040580df359fabd687dc0e10c638";
+    public final static String ACCESS_TOKEN = "722cd1342c06073e5bf9d21c07ed8f992c917f2e";
 
     /**
      * @param args
@@ -42,7 +43,10 @@ public class SmsRestClientTest
             for (User user : userList) {
                 System.out.println(user);
             }
+            ArrayList<Device> deviceList = smsClient.getDevices(realmId);
+            for (Device device : deviceList) {
+                System.out.println(device);
+            }
         }
     }
-
 }
