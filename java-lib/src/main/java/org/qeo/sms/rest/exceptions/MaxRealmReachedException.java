@@ -11,30 +11,18 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.models;
-
-import java.util.ArrayList;
+package org.qeo.sms.rest.exceptions;
 
 /**
- * 
+ * Exception thrown when the maximum number of realms is reached (the current limit is 25).
  */
-public class Policy
+public class MaxRealmReachedException
+    extends Exception
 {
-    private final ArrayList<Rule> mRules;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * @param rules
-     */
-    public Policy(ArrayList<Rule> rules)
+    public MaxRealmReachedException()
     {
-        mRules = rules;
-    }
-
-    /**
-     * @return the Rules
-     */
-    public ArrayList<Rule> getRules()
-    {
-        return mRules;
+        super("Max number of realms reached");
     }
 }

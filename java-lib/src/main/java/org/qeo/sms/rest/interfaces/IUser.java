@@ -11,30 +11,22 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.models;
+package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
+
+import org.qeo.sms.rest.models.User;
 
 /**
  * 
  */
-public class Policy
+public interface IUser
 {
-    private final ArrayList<Rule> mRules;
 
     /**
-     * @param rules
+     * Retrieve all Users within a Realm of a Qeo Administrator.
+     * 
+     * @return a list of Users
      */
-    public Policy(ArrayList<Rule> rules)
-    {
-        mRules = rules;
-    }
-
-    /**
-     * @return the Rules
-     */
-    public ArrayList<Rule> getRules()
-    {
-        return mRules;
-    }
+    public ArrayList<User> getUsers(long realmId);
 }

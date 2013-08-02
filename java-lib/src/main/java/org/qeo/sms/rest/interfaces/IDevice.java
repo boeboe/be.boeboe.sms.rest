@@ -11,30 +11,22 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.models;
+package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
+
+import org.qeo.sms.rest.models.Device;
 
 /**
  * 
  */
-public class Policy
+public interface IDevice
 {
-    private final ArrayList<Rule> mRules;
 
     /**
-     * @param rules
+     * Retrieve all Devices within a Realm of a Qeo Administrator.
+     * 
+     * @return a list of Devices
      */
-    public Policy(ArrayList<Rule> rules)
-    {
-        mRules = rules;
-    }
-
-    /**
-     * @return the Rules
-     */
-    public ArrayList<Rule> getRules()
-    {
-        return mRules;
-    }
+    public ArrayList<Device> getDevices(long realmId);
 }

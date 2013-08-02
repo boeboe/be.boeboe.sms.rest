@@ -11,19 +11,16 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.client;
+package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
-import org.qeo.sms.rest.models.Device;
-import org.qeo.sms.rest.models.Policy;
 import org.qeo.sms.rest.models.Realm;
-import org.qeo.sms.rest.models.User;
 
 /**
  * 
  */
-public interface ISmsRestClient
+public interface IRealm
 {
 
     /**
@@ -34,30 +31,18 @@ public interface ISmsRestClient
     public ArrayList<Realm> getRealms();
 
     /**
-     * Retrieve all Users within a Realm of a Qeo Administrator.
+     * Create a single Realm of a Qeo administrator.
      * 
-     * @return a list of Users
+     * @param name the name you want to assign to the realm
+     * @return the id of the newly created realm
      */
-    public ArrayList<User> getUsers(long realmId);
+    public long createRealm(String name);
 
     /**
-     * Retrieve all Devices within a Realm of a Qeo Administrator.
+     * Modify a single Realm of a Qeo administrator.
      * 
-     * @return a list of Devices
+     * @param id the id the realm to be modified
+     * @param name the name you want to assign to the realm
      */
-    public ArrayList<Device> getDevices(long realmId);
-
-    /**
-     * Retrieve the Policy of every User in the Realm of a Qeo Administrator.
-     * 
-     * @return a list of Policies
-     */
-    public ArrayList<Policy> getPolicies(long realmId);
-
-    /**
-     * Retrieve the Policy of a single User in the Realm of a Qeo Administrator.
-     * 
-     * @return the Policy for that user
-     */
-    public Policy getPolicyUser(long realmId, long userId);
+    public void modifyRealm(long id, String name);
 }

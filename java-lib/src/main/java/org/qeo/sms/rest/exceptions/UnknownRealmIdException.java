@@ -11,30 +11,18 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.models;
-
-import java.util.ArrayList;
+package org.qeo.sms.rest.exceptions;
 
 /**
- * 
+ * Exception thrown when an unknown realm id is used.
  */
-public class Policy
+public class UnknownRealmIdException
+    extends Exception
 {
-    private final ArrayList<Rule> mRules;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * @param rules
-     */
-    public Policy(ArrayList<Rule> rules)
+    public UnknownRealmIdException()
     {
-        mRules = rules;
-    }
-
-    /**
-     * @return the Rules
-     */
-    public ArrayList<Rule> getRules()
-    {
-        return mRules;
+        super("Unknown realm id");
     }
 }

@@ -11,30 +11,18 @@
  ** with TECHNICOLOR, UNLESS OTHERWISE EXPRESSLY ALLOWED BY APPLICABLE LAWS. **
  **                                                                          **
  ******************************************************************************/
-package org.qeo.sms.rest.models;
-
-import java.util.ArrayList;
+package org.qeo.sms.rest.exceptions;
 
 /**
- * 
+ * Exception thrown when a wrong realm - user combination is used.
  */
-public class Policy
+public class UnknownRealmUserException
+    extends Exception
 {
-    private final ArrayList<Rule> mRules;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * @param rules
-     */
-    public Policy(ArrayList<Rule> rules)
+    public UnknownRealmUserException()
     {
-        mRules = rules;
-    }
-
-    /**
-     * @return the Rules
-     */
-    public ArrayList<Rule> getRules()
-    {
-        return mRules;
+        super("Unknown realm - user combination");
     }
 }
