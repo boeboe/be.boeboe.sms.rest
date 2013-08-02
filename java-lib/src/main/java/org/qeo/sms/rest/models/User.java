@@ -13,6 +13,9 @@
  ******************************************************************************/
 package org.qeo.sms.rest.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 
  */
@@ -23,7 +26,14 @@ public class User
     private final String mType;
     private final String mName;
 
+    private static final String NAME = "name";
+    private static final String ID = "id";
+    private static final String TYPE = "type";
+    private static final String REALM = "realm";
+
     /**
+     * Constructor to create a user object.
+     * 
      * @param id
      * @param realmId
      * @param type
@@ -35,6 +45,23 @@ public class User
         mRealmId = realmId;
         mType = type;
         mName = name;
+    }
+
+    /**
+     * Constructor to create a user object from it's JSON representation.
+     * 
+     * { "name" : "Adam", "id" : 1643, "type" : "user", "realm" : 6575425569096907932 }
+     * 
+     * @param realmJson JSON representation of a realm
+     * @throws JSONException
+     */
+    public User(JSONObject realmJson)
+        throws JSONException
+    {
+        mId = realmJson.getLong(ID);
+        mType = realmJson.getString(TYPE);
+        mName = realmJson.getString(NAME);
+        mRealmId = realmJson.getLong(REALM);
     }
 
     /**
@@ -67,5 +94,11 @@ public class User
     public String getName()
     {
         return mName;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "User [mId=" + mId + ", mRealmId=" + mRealmId + ", mType=" + mType + ", mName=" + mName + "]";
     }
 }

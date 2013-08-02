@@ -16,6 +16,7 @@ package org.qeo.sms.rest.client;
 import java.util.ArrayList;
 
 import org.qeo.sms.rest.models.Realm;
+import org.qeo.sms.rest.models.User;
 
 /**
  * 
@@ -33,9 +34,14 @@ public class SmsRestClientTest
         SmsRestClient smsClient = new SmsRestClient(ACCESS_TOKEN);
 
         ArrayList<Realm> realmList = smsClient.getRealms();
-
         for (Realm realm : realmList) {
             System.out.println(realm);
+
+            long realmId = realm.getId();
+            ArrayList<User> userList = smsClient.getUsers(realmId);
+            for (User user : userList) {
+                System.out.println(user);
+            }
         }
     }
 

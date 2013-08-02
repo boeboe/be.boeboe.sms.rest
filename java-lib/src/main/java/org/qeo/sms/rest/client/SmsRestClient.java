@@ -7,8 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
 import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
+import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
 import org.qeo.sms.rest.interfaces.IRealm;
+import org.qeo.sms.rest.interfaces.IUser;
 import org.qeo.sms.rest.models.Realm;
+import org.qeo.sms.rest.models.User;
 
 /************** COPYRIGHT AND CONFIDENTIALITY INFORMATION *********************
  **                                                                          **
@@ -28,7 +31,7 @@ import org.qeo.sms.rest.models.Realm;
  * 
  */
 public class SmsRestClient
-    implements IRealm
+    implements IRealm, IUser
 {
     private final static String BASE_URI = "http://join.qeodev.org:8080/qeo-rest-service/v1";
     private final static String REALMS_URI = BASE_URI + "/realms";
@@ -78,6 +81,45 @@ public class SmsRestClient
     @Override
     public void deleteRealm(long realmId)
         throws UnknownRealmIdException
+    {
+
+    }
+
+    @Override
+    public ArrayList<User> getUsers(long realmId)
+    {
+        ArrayList<User> usersList = new ArrayList<>();
+
+        URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
+        JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);
+
+        try {
+            usersList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("users"), User.class);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return usersList;
+    }
+
+    @Override
+    public User createUser(long realmId, String userName)
+        throws UnknownRealmIdException
+    {
+        return null;
+    }
+
+    @Override
+    public void modifyUser(long realmId, long userId, String userName)
+        throws UnknownRealmIdException, UnknownRealmUserException
+    {
+
+    }
+
+    @Override
+    public void deleteUser(long realmId, long userId)
+        throws UnknownRealmIdException, UnknownRealmUserException
     {
 
     }
