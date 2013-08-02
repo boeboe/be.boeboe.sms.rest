@@ -15,6 +15,8 @@ package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
+import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
+import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.models.Realm;
 
 /**
@@ -33,16 +35,29 @@ public interface IRealm
     /**
      * Create a single Realm of a Qeo administrator.
      * 
-     * @param name the name you want to assign to the realm
-     * @return the id of the newly created realm
+     * @param realmName the name you want to assign to the realm
+     * @return the new realm
+     * @throws MaxRealmReachedException when the maximum number of realms (25) is reached
      */
-    public long createRealm(String name);
+    public Realm createRealm(String realmName)
+        throws MaxRealmReachedException;
 
     /**
      * Modify a single Realm of a Qeo administrator.
      * 
-     * @param id the id the realm to be modified
-     * @param name the name you want to assign to the realm
+     * @param realmId the id the realm to be modified
+     * @param realmName the name you want to assign to the realm
+     * @throws UnknownRealmIdException when an unknown realm id is used
      */
-    public void modifyRealm(long id, String name);
+    public void modifyRealm(long realmId, String realmName)
+        throws UnknownRealmIdException;
+
+    /**
+     * Delete a single Realm of a Qeo administrator.
+     * 
+     * @param realmId the id the realm to be deleted
+     * @throws UnknownRealmIdException when an unknown realm id is used
+     */
+    public void deleteRealm(long realmId)
+        throws UnknownRealmIdException;
 }
