@@ -83,10 +83,19 @@ public class SmsRestClient
     }
 
     @Override
-    public void modifyRealm(long realmId, String realmName)
+    public Realm modifyRealm(long realmId, String realmName)
         throws UnknownRealmIdException
     {
-
+        JSONObject realmJsonCreate = new JSONObject();
+        try {
+            realmJsonCreate.put("id", realmId).put("name", realmName);
+            JSONObject jsonRealmResult = SmsRestUtils.execRestPost(mAccessToken, mRealmsUri, realmJsonCreate);
+            return new Realm(jsonRealmResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

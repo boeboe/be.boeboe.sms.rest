@@ -47,9 +47,10 @@ public interface IRealm
      * 
      * @param realmId the id the realm to be modified
      * @param realmName the name you want to assign to the realm
+     * @return the modified realm
      * @throws UnknownRealmIdException when an unknown realm id is used
      */
-    public void modifyRealm(long realmId, String realmName)
+    public Realm modifyRealm(long realmId, String realmName)
         throws UnknownRealmIdException;
 
     /**

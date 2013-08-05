@@ -14,7 +14,7 @@
 package org.qeo.sms.rest.client;
 
 import org.json.JSONException;
-import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
+import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.models.Realm;
 
 /**
@@ -39,18 +39,23 @@ public class SmsRestClientTest
         // Realm newRealm = new Realm(realmJson);
         // System.out.println("newRealm == " + newRealm.toString());
 
+        // 6162717526657293560
+
+        long realmId = Long.parseLong("6162717526657293560");
+
         for (int i = 0; i <= 30; i++) {
             try {
-                Realm newRealm = smsClient.createRealm("JsonRealmTest_" + i);
+                // Realm newRealm = smsClient.createRealm("JsonRealmTest_" + i);
+                Realm newRealm = smsClient.modifyRealm(realmId, "JsonRealmTest_" + i);
                 System.out.println(newRealm.toString());
             }
-            catch (MaxRealmReachedException e) {
-                // TODO Auto-generated catch block
+            // catch (MaxRealmReachedException e) {
+            // e.printStackTrace();
+            // }
+            catch (UnknownRealmIdException e) {
                 e.printStackTrace();
             }
         }
-
-
 
         // ArrayList<Realm> realmList = smsClient.getRealms();
         // for (Realm realm : realmList) {

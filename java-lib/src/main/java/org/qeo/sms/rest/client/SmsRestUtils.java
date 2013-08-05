@@ -83,8 +83,9 @@ public class SmsRestUtils
         try {
             post.setEntity(new StringEntity(json.toString(), "UTF8"));
             HttpResponse response = httpClient.execute(post);
+            int status = response.getStatusLine().getStatusCode();
 
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
+            if (!(status == HttpStatus.SC_CREATED || status == HttpStatus.SC_OK)) {
                 JSONObject jsonError = responseToJson(response);
                 analyseJsonError(jsonError);
             }
