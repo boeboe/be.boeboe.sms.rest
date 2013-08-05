@@ -100,9 +100,9 @@ public class SmsRestClient
 
     @Override
     public void deleteRealm(long realmId)
-        throws UnknownRealmIdException
     {
-
+        URI deleteUri = URI.create(REALMS_URI + "/" + realmId);
+        SmsRestUtils.execRestDelete(mAccessToken, deleteUri);
     }
 
     @Override

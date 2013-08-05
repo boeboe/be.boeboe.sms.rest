@@ -24,6 +24,7 @@ import java.util.Arrays;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -98,6 +99,33 @@ public class SmsRestUtils
             httpClient.getConnectionManager().shutdown();
             e.printStackTrace();
             return null;
+        }
+
+    }
+
+    public static void execRestDelete(String accessToken, URI uri)
+    {
+        final DefaultHttpClient httpClient;
+        httpClient = new DefaultHttpClient();
+
+        HttpDelete delete = new HttpDelete(uri);
+        delete.setHeader("Content-type", "application/json");
+        delete.addHeader("Authorization", "Bearer " + accessToken);
+
+        try {
+            HttpResponse response = httpClient.execute(delete);
+            int status = response.getStatusLine().getStatusCode();
+
+            if (status != HttpStatus.SC_OK) {
+                JSONObject jsonError = responseToJson(response);
+                analyseJsonError(jsonError);
+            }
+
+            httpClient.getConnectionManager().shutdown();
+        }
+        catch (Exception e) {
+            httpClient.getConnectionManager().shutdown();
+            e.printStackTrace();
         }
 
     }

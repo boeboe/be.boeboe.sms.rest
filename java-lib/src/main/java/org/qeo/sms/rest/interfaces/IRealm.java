@@ -57,8 +57,6 @@ public interface IRealm
      * Delete a single realm of a Qeo administrator.
      * 
      * @param realmId the id the realm to be deleted
-     * @throws UnknownRealmIdException when an unknown realm id is used
      */
-    public void deleteRealm(long realmId)
-        throws UnknownRealmIdException;
+    public void deleteRealm(long realmId);
 }
