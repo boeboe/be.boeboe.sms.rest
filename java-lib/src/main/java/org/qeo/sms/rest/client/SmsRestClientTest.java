@@ -13,11 +13,9 @@
  ******************************************************************************/
 package org.qeo.sms.rest.client;
 
-import java.util.ArrayList;
-
-import org.qeo.sms.rest.models.Device;
+import org.json.JSONException;
+import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
 import org.qeo.sms.rest.models.Realm;
-import org.qeo.sms.rest.models.User;
 
 /**
  * 
@@ -25,36 +23,57 @@ import org.qeo.sms.rest.models.User;
 public class SmsRestClientTest
 {
 
-    public final static String ACCESS_TOKEN = "7c18c5d522389abcdf482893352bda60af6c60df";
+    public final static String ACCESS_TOKEN = "e6aaf5bf3a8bc6b861b587e9daa6aab3df528709";
 
     /**
      * @param args
+     * @throws JSONException
      */
     public static void main(String[] args)
     {
         SmsRestClient smsClient = new SmsRestClient(ACCESS_TOKEN);
 
-        ArrayList<Realm> realmList = smsClient.getRealms();
-        for (Realm realm : realmList) {
-            System.out.println(realm);
+        // Realm realm = new Realm(123, "realm", "BartRealm");
+        // System.out.println("realm == " + realm.toString());
+        // JSONObject realmJson = realm.toJson();
+        // Realm newRealm = new Realm(realmJson);
+        // System.out.println("newRealm == " + newRealm.toString());
 
-            long realmId = realm.getId();
-
-            ArrayList<User> userList = smsClient.getUsers(realmId);
-            for (User user : userList) {
-                System.out.println(user);
-
-                long userId = user.getId();
-                ArrayList<Device> devicePerUserList = smsClient.getDevices(realmId, userId);
-                for (Device deviceUser : devicePerUserList) {
-                    System.out.println("<user:" + userId + "> " + deviceUser);
-                }
+        for (int i = 0; i <= 30; i++) {
+            try {
+                Realm newRealm = smsClient.createRealm("JsonRealmTest_" + i);
+                System.out.println(newRealm.toString());
             }
-
-            ArrayList<Device> deviceList = smsClient.getDevices(realmId);
-            for (Device device : deviceList) {
-                System.out.println(device);
+            catch (MaxRealmReachedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
+
+
+
+        // ArrayList<Realm> realmList = smsClient.getRealms();
+        // for (Realm realm : realmList) {
+        // System.out.println(realm);
+        //
+        // long realmId = realm.getId();
+        //
+        // ArrayList<User> userList = smsClient.getUsers(realmId);
+        // for (User user : userList) {
+        // System.out.println(user);
+        //
+        // long userId = user.getId();
+        // ArrayList<Device> devicePerUserList = smsClient.getDevices(realmId, userId);
+        // for (Device deviceUser : devicePerUserList) {
+        // System.out.println("<user:" + userId + "> " + deviceUser);
+        // }
+        // }
+        //
+        // ArrayList<Device> deviceList = smsClient.getDevices(realmId);
+        // for (Device device : deviceList) {
+        // System.out.println(device);
+        // }
+        // }
+
     }
 }

@@ -88,4 +88,10 @@ public class Realm
     {
         return "Realm [mId=" + mId + ", mType=" + mType + ", mName=" + mName + "]";
     }
+
+    public JSONObject toJson()
+        throws JSONException
+    {
+        return new JSONObject().put("id", mId).put("type", mType).put("name", mName);
+    }
 }

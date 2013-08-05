@@ -70,7 +70,16 @@ public class SmsRestClient
     public Realm createRealm(String realmName)
         throws MaxRealmReachedException
     {
-        return null;
+        JSONObject realmJsonCreate = new JSONObject();
+        try {
+            realmJsonCreate.put("name", realmName);
+            JSONObject jsonRealmResult = SmsRestUtils.execRestPost(mAccessToken, mRealmsUri, realmJsonCreate);
+            return new Realm(jsonRealmResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
