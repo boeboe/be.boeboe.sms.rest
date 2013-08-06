@@ -14,6 +14,10 @@
 package org.qeo.sms.rest.client;
 
 import org.json.JSONException;
+import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
+import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.models.Device;
+import org.qeo.sms.rest.models.User;
 
 /**
  * 
@@ -21,16 +25,31 @@ import org.json.JSONException;
 public class SmsRestClientTest
 {
 
-    public final static String ACCESS_TOKEN = "c934847457d796426f027fbbd50e7f6637882ddd";
+    public final static String ACCESS_TOKEN = "45e3cea8135d0142a8da0b2c886c9750f5467c36";
 
     /**
      * @param args
+     * @throws UnknownRealmUserException
+     * @throws UnknownRealmIdException
      * @throws JSONException
      */
     public static void main(String[] args)
+        throws UnknownRealmIdException, UnknownRealmUserException
     {
         SmsRestClient smsClient = new SmsRestClient(ACCESS_TOKEN);
         long realmId = Long.parseLong("2209845187177181091");
+
+        User user = smsClient.getUsers(realmId).get(0);
+
+        for (int i = 0; i < 10; i++) {
+            Device dev = smsClient.createDevice(realmId, user.getId(), "TestDevice_" + i);
+            smsClient.modifyDevice(realmId, user.getId(), dev.getId(), "TestDeviceModified_" + i);
+        }
+
+        for (Device dev : smsClient.getDevices(realmId)) {
+            smsClient.deleteDevice(realmId, dev.getUserId(), dev.getId());
+        }
+
 
         // Realm realm = new Realm(123, "realm", "BartRealm");
         // System.out.println("realm == " + realm.toString());

@@ -243,6 +243,14 @@ public class SmsRestClient
         throws UnknownRealmIdException, UnknownRealmUserException
     {
         URI deleteDeviceUri = URI.create(REALMS_URI + "/" + realmId + "/devices/" + deviceId);
-        SmsRestUtils.execRestDelete(mAccessToken, deleteDeviceUri);
+        JSONObject deviceJsonDelete = new JSONObject();
+        
+        try {
+            deviceJsonDelete.put("user", userId);
+            SmsRestUtils.execRestDeleteWithJson(mAccessToken, deleteDeviceUri, deviceJsonDelete);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }       
     }
 }
