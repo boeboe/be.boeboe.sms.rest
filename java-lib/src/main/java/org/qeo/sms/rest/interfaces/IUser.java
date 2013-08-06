@@ -45,10 +45,11 @@ public interface IUser
      * @param realmId the id the realm where the user gets modified
      * @param userId the id of the user
      * @param userName the new name of the existing user
+     * @return the modified user
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public void modifyUser(long realmId, long userId, String userName)
+    public User modifyUser(long realmId, long userId, String userName)
         throws UnknownRealmIdException, UnknownRealmUserException;
 
     /**

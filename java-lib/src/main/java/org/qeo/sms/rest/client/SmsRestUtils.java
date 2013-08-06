@@ -127,7 +127,6 @@ public class SmsRestUtils
             httpClient.getConnectionManager().shutdown();
             e.printStackTrace();
         }
-
     }
 
     /**

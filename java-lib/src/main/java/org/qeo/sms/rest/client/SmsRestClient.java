@@ -86,10 +86,10 @@ public class SmsRestClient
     public Realm modifyRealm(long realmId, String realmName)
         throws UnknownRealmIdException
     {
-        JSONObject realmJsonCreate = new JSONObject();
+        JSONObject realmJsonModify = new JSONObject();
         try {
-            realmJsonCreate.put("id", realmId).put("name", realmName);
-            JSONObject jsonRealmResult = SmsRestUtils.execRestPost(mAccessToken, mRealmsUri, realmJsonCreate);
+            realmJsonModify.put("id", realmId).put("name", realmName);
+            JSONObject jsonRealmResult = SmsRestUtils.execRestPost(mAccessToken, mRealmsUri, realmJsonModify);
             return new Realm(jsonRealmResult);
         }
         catch (JSONException e) {
@@ -101,8 +101,8 @@ public class SmsRestClient
     @Override
     public void deleteRealm(long realmId)
     {
-        URI deleteUri = URI.create(REALMS_URI + "/" + realmId);
-        SmsRestUtils.execRestDelete(mAccessToken, deleteUri);
+        URI deleteRealmUri = URI.create(REALMS_URI + "/" + realmId);
+        SmsRestUtils.execRestDelete(mAccessToken, deleteRealmUri);
     }
 
     @Override
@@ -127,21 +127,43 @@ public class SmsRestClient
     public User createUser(long realmId, String userName)
         throws UnknownRealmIdException
     {
-        return null;
+        URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
+        JSONObject userJsonCreate = new JSONObject();
+
+        try {
+            userJsonCreate.put("name", userName);
+            JSONObject jsonUserResult = SmsRestUtils.execRestPost(mAccessToken, mUsersUri, userJsonCreate);
+            return new User(jsonUserResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public void modifyUser(long realmId, long userId, String userName)
+    public User modifyUser(long realmId, long userId, String userName)
         throws UnknownRealmIdException, UnknownRealmUserException
     {
-
+        URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
+        JSONObject userJsonModify = new JSONObject();
+        try {
+            userJsonModify.put("id", userId).put("name", userName);
+            JSONObject jsonUserResult = SmsRestUtils.execRestPost(mAccessToken, mUsersUri, userJsonModify);
+            return new User(jsonUserResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void deleteUser(long realmId, long userId)
         throws UnknownRealmIdException, UnknownRealmUserException
     {
-
+        URI deleteUserUri = URI.create(REALMS_URI + "/" + realmId + "/users/" + userId);
+        SmsRestUtils.execRestDelete(mAccessToken, deleteUserUri);
     }
 
     @Override
