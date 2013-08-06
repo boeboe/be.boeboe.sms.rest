@@ -53,7 +53,7 @@ public class SmsRestClient
     @Override
     public ArrayList<Realm> getRealms()
     {
-        ArrayList<Realm> realmsList = new ArrayList<>();
+        ArrayList<Realm> realmsList = new ArrayList<Realm>();
         JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mRealmsUri);
 
         try {
@@ -108,7 +108,7 @@ public class SmsRestClient
     @Override
     public ArrayList<User> getUsers(long realmId)
     {
-        ArrayList<User> usersList = new ArrayList<>();
+        ArrayList<User> usersList = new ArrayList<User>();
 
         URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
         JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);
@@ -169,7 +169,7 @@ public class SmsRestClient
     @Override
     public ArrayList<Device> getDevices(long realmId)
     {
-        ArrayList<Device> deviceList = new ArrayList<>();
+        ArrayList<Device> deviceList = new ArrayList<Device>();
 
         URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
         JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);
@@ -187,7 +187,7 @@ public class SmsRestClient
     @Override
     public ArrayList<Device> getDevices(long realmId, long userId)
     {
-        ArrayList<Device> deviceList = new ArrayList<>();
+        ArrayList<Device> deviceList = new ArrayList<Device>();
 
         URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/devices?users=" + userId);
         JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mUsersUri);

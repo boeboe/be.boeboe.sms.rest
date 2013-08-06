@@ -9,4 +9,5 @@ bin/
 eclipse/
 .gradle
 output/
+java-lib/build/
 
