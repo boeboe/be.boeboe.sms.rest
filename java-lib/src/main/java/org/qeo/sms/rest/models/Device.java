@@ -30,7 +30,7 @@ public class Device
     private final String mName;
     private final DeviceState mState;
     private final String mDeviceId;
-    private final Otc mOtc;
+    private Otc mOtc;
 
     private static final String NAME = "name";
     private static final String ID = "id";
@@ -77,7 +77,7 @@ public class Device
      * @throws ParseException
      */
     public Device(JSONObject deviceJson)
-        throws JSONException, ParseException
+        throws JSONException
     {
         mId = deviceJson.getLong(ID);
         mRealmId = deviceJson.getLong(REALM);
@@ -86,10 +86,16 @@ public class Device
         mName = deviceJson.getString(NAME);
         mState = getState(deviceJson.getString(STATE));
         mDeviceId = deviceJson.getString(DEVICE_ID);
+        mOtc = null;
 
         // Enrolled and 
         if (deviceJson.has(OTC)) {
-            mOtc = new Otc(deviceJson.getJSONObject(OTC));
+            try {
+                mOtc = new Otc(deviceJson.getJSONObject(OTC));
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         else {
             mOtc = null;

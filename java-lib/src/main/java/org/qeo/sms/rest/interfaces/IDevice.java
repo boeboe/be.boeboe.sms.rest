@@ -57,11 +57,12 @@ public interface IDevice
      * @param realmId the id the realm where the device is modified
      * @param userId the id the user of which the device is modified
      * @param deviceId the id of the device to be modified
-     * @param deviceName the new name of the modified device
+     * @param deviceName the new name of the modified device+
+     * @return the modified device
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public void modifyDevice(long realmId, long userId, long deviceId, String deviceName)
+    public Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException;
 
     /**

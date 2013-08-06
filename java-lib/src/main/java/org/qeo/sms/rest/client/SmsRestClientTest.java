@@ -14,9 +14,6 @@
 package org.qeo.sms.rest.client;
 
 import org.json.JSONException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
-import org.qeo.sms.rest.models.User;
 
 /**
  * 
@@ -71,29 +68,29 @@ public class SmsRestClientTest
         //
         // }
         
-        try {
-            for (int i = 0; i < 10; i++) {
-                User user = smsClient.createUser(realmId, "TestUser_" + i);
-                System.out.println(user);
-                User modifyUser = smsClient.modifyUser(realmId, user.getId(), "TestUserModify_" + i);
-                System.out.println(modifyUser);
-                smsClient.deleteUser(realmId, modifyUser.getId());
-            }
-        }
-        catch (UnknownRealmIdException | UnknownRealmUserException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        for (User u : smsClient.getUsers(realmId)) {
-            try {
-                smsClient.deleteUser(realmId, u.getId());
-            }
-            catch (UnknownRealmIdException | UnknownRealmUserException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        // try {
+        // for (int i = 0; i < 10; i++) {
+        // User user = smsClient.createUser(realmId, "TestUser_" + i);
+        // System.out.println(user);
+        // User modifyUser = smsClient.modifyUser(realmId, user.getId(), "TestUserModify_" + i);
+        // System.out.println(modifyUser);
+        // smsClient.deleteUser(realmId, modifyUser.getId());
+        // }
+        // }
+        // catch (UnknownRealmIdException | UnknownRealmUserException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+        //
+        // for (User u : smsClient.getUsers(realmId)) {
+        // try {
+        // smsClient.deleteUser(realmId, u.getId());
+        // }
+        // catch (UnknownRealmIdException | UnknownRealmUserException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+        // }
 
         // ArrayList<Realm> realmList = smsClient.getRealms();
         // for (Realm realm : realmList) {

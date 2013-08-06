@@ -129,6 +129,33 @@ public class SmsRestUtils
         }
     }
 
+    public static void execRestDeleteWithJson(String accessToken, URI uri, JSONObject json)
+    {
+        final DefaultHttpClient httpClient;
+        httpClient = new DefaultHttpClient();
+
+        HttpDeleteWithBody delete = new HttpDeleteWithBody(uri);
+        delete.setHeader("Content-type", "application/json");
+        delete.addHeader("Authorization", "Bearer " + accessToken);
+
+        try {
+            delete.setEntity(new StringEntity(json.toString(), "UTF8"));
+            HttpResponse response = httpClient.execute(delete);
+            int status = response.getStatusLine().getStatusCode();
+
+            if (status != HttpStatus.SC_OK) {
+                JSONObject jsonError = responseToJson(response);
+                analyseJsonError(jsonError);
+            }
+
+            httpClient.getConnectionManager().shutdown();
+        }
+        catch (Exception e) {
+            httpClient.getConnectionManager().shutdown();
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param jsonError
      * @throws JSONException

@@ -206,21 +206,43 @@ public class SmsRestClient
     public Device createDevice(long realmId, long userId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException
     {
-        return null;
+        URI mDevicesUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
+        JSONObject deviceJsonCreate = new JSONObject();
+
+        try {
+            deviceJsonCreate.put("user", userId).put("name", deviceName);
+            JSONObject jsonDeviceResult = SmsRestUtils.execRestPost(mAccessToken, mDevicesUri, deviceJsonCreate);
+            return new Device(jsonDeviceResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
     @Override
-    public void modifyDevice(long realmId, long userId, long deviceId, String deviceName)
+    public Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException
     {
-
+        URI mDevicesUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
+        JSONObject deviceJsonModify = new JSONObject();
+        try {
+            deviceJsonModify.put("id", deviceId).put("user", userId).put("name", deviceName);
+            JSONObject jsonDeviceResult = SmsRestUtils.execRestPost(mAccessToken, mDevicesUri, deviceJsonModify);
+            return new Device(jsonDeviceResult);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void deleteDevice(long realmId, long userId, long deviceId)
         throws UnknownRealmIdException, UnknownRealmUserException
     {
-
+        URI deleteDeviceUri = URI.create(REALMS_URI + "/" + realmId + "/devices/" + deviceId);
+        SmsRestUtils.execRestDelete(mAccessToken, deleteDeviceUri);
     }
 }
