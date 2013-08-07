@@ -21,6 +21,9 @@ public class InvalidAuthTokenException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when authorization token is invalid.
+     */
     public InvalidAuthTokenException()
     {
         super("Invalid authorization token");

@@ -20,7 +20,7 @@ import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
 import org.qeo.sms.rest.models.User;
 
 /**
- * 
+ * Interface defining the methods applicable on a User.
  */
 public interface IUser
 {
@@ -28,20 +28,25 @@ public interface IUser
     /**
      * Retrieve all Users within a Realm of a Qeo Administrator.
      * 
+     * @param realmId the realmId
      * @return a list of Users
      */
-    public ArrayList<User> getUsers(long realmId);
+    ArrayList<User> getUsers(long realmId);
 
     /**
+     * Create a user within a certain realm.
+     * 
      * @param realmId the id the realm where the user gets created
      * @param userName the name of the new user
      * @return the new user
      * @throws UnknownRealmIdException when an unknown realm id is used
      */
-    public User createUser(long realmId, String userName)
+    User createUser(long realmId, String userName)
         throws UnknownRealmIdException;
-    
+
     /**
+     * Modify a user within a certain realm.
+     * 
      * @param realmId the id the realm where the user gets modified
      * @param userId the id of the user
      * @param userName the new name of the existing user
@@ -49,15 +54,17 @@ public interface IUser
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public User modifyUser(long realmId, long userId, String userName)
+    User modifyUser(long realmId, long userId, String userName)
         throws UnknownRealmIdException, UnknownRealmUserException;
 
     /**
+     * Delete a user within a certain realm.
+     * 
      * @param realmId the id the realm where the user gets deleted
      * @param userId the id of the user
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public void deleteUser(long realmId, long userId)
+    void deleteUser(long realmId, long userId)
         throws UnknownRealmIdException, UnknownRealmUserException;
 }

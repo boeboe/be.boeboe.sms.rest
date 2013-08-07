@@ -8,7 +8,8 @@ apply plugin: 'findbugs'
 apply plugin: 'eclipse'
 
 group = 'org.qeo'
-version = '0.0.0-SNAPSHOT'
+version = project.qeoVersion
+
 
 /*
 ignoreFailures is used to not let the build fail when there are 

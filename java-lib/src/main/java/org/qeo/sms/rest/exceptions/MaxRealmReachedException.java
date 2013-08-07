@@ -21,6 +21,9 @@ public class MaxRealmReachedException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when the maximum number of realms is reached (the current limit is 25).
+     */
     public MaxRealmReachedException()
     {
         super("Max number of realms reached");

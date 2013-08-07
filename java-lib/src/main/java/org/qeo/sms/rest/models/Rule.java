@@ -28,12 +28,12 @@ public class Rule
     private final ArrayList<Long> mWriteAccessUsers;
 
     /**
-     * @param name
-     * @param type
-     * @param users
-     * @param realmId
-     * @param readAccessUsers
-     * @param writeAccessUsers
+     * @param name the name of the rule
+     * @param type the type of the rule
+     * @param users the users of the rule
+     * @param realmId the realmId
+     * @param readAccessUsers the list of users with read access
+     * @param writeAccessUsers the list of users with write access
      */
     public Rule(String name, String type, ArrayList<Long> users, long realmId, ArrayList<Long> readAccessUsers,
         ArrayList<Long> writeAccessUsers)

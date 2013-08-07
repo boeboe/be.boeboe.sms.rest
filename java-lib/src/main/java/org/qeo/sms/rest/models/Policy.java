@@ -23,7 +23,7 @@ public class Policy
     private final ArrayList<Rule> mRules;
 
     /**
-     * @param rules
+     * @param rules the rules of a policy
      */
     public Policy(ArrayList<Rule> rules)
     {

@@ -18,11 +18,15 @@ import java.net.URI;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 
+/**
+ * Extension of a standard HTTP Delete message with support for attaching a HTTP body.
+ */
 @NotThreadSafe
 public class HttpDeleteWithBody
     extends HttpEntityEnclosingRequestBase
 {
 
+    /** HTTP message signature: DELETE. */
     public static final String METHOD_NAME = "DELETE";
 
     @Override
@@ -31,18 +35,27 @@ public class HttpDeleteWithBody
         return METHOD_NAME;
     }
 
+    /**
+     * @param uri the URI to send this HTTP Delete towards.
+     */
     public HttpDeleteWithBody(final String uri)
     {
         super();
         setURI(URI.create(uri));
     }
 
+    /**
+     * @param uri the URI to send this HTTP Delete towards.
+     */
     public HttpDeleteWithBody(final URI uri)
     {
         super();
         setURI(uri);
     }
 
+    /**
+     * Default constructor.
+     */
     public HttpDeleteWithBody()
     {
         super();

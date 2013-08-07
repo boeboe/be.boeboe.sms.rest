@@ -21,6 +21,9 @@ public class UnknownRealmUserException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when a wrong realm - user combination is used.
+     */
     public UnknownRealmUserException()
     {
         super("Unknown realm - user combination");

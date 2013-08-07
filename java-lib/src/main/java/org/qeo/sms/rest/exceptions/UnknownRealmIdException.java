@@ -21,6 +21,9 @@ public class UnknownRealmIdException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when an unknown realm id is used.
+     */
     public UnknownRealmIdException()
     {
         super("Unknown realm id");

@@ -31,13 +31,13 @@ public class Otc
 
     private static final String CODE = "code";
     private static final String DATE = "date";
-    private static final DateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     /**
      * Constructor to create a otc object.
      * 
-     * @param code
-     * @param date
+     * @param code the OTC code
+     * @param date the date of OTC/Device creation
      */
     public Otc(String code, Date date)
     {
@@ -50,15 +50,15 @@ public class Otc
      * 
      * { "date" : "2013-08-02T17:11:59.761+0200", "code" : "93756321" }
      * 
-     * @param otcJson JSON representation of a otc
-     * @throws JSONException
-     * @throws ParseException
+     * @param otcJson JSON representation of an OTC
+     * @throws JSONException when a JSON parsing error occurred
+     * @throws ParseException when a date parsing error occurred
      */
     public Otc(JSONObject otcJson)
         throws JSONException, ParseException
     {
         mCode = otcJson.getString(CODE);
-        mDate = sDateFormat.parse(otcJson.getString(DATE));
+        mDate = DATE_FORMAT.parse(otcJson.getString(DATE));
     }
 
     /**

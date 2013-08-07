@@ -21,6 +21,9 @@ public class MissingAuthTokenException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when authorization token is missing.
+     */
     public MissingAuthTokenException()
     {
         super("Missing authorization token");

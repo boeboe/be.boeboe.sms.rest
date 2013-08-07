@@ -34,10 +34,10 @@ public class User
     /**
      * Constructor to create a user object.
      * 
-     * @param id
-     * @param realmId
-     * @param type
-     * @param name
+     * @param id the id of the user
+     * @param realmId the realmId to which the user belongs to
+     * @param type the type of the user (always "user")
+     * @param name the name of the user
      */
     public User(long id, long realmId, String type, String name)
     {
@@ -53,7 +53,7 @@ public class User
      * { "name" : "Adam", "id" : 1643, "type" : "user", "realm" : 6575425569096907932 }
      * 
      * @param userJson JSON representation of a user
-     * @throws JSONException
+     * @throws JSONException when a JSON parsing exception occurred
      */
     public User(JSONObject userJson)
         throws JSONException

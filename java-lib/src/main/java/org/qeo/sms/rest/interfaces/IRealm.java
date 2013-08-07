@@ -20,7 +20,7 @@ import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.models.Realm;
 
 /**
- * 
+ * Interface defining the methods applicable on a Realm.
  */
 public interface IRealm
 {
@@ -30,7 +30,7 @@ public interface IRealm
      * 
      * @return a list of Realms
      */
-    public ArrayList<Realm> getRealms();
+    ArrayList<Realm> getRealms();
 
     /**
      * Create a single realm of a Qeo administrator.
@@ -39,7 +39,7 @@ public interface IRealm
      * @return the new realm
      * @throws MaxRealmReachedException when the maximum number of realms (25) is reached
      */
-    public Realm createRealm(String realmName)
+    Realm createRealm(String realmName)
         throws MaxRealmReachedException;
 
     /**
@@ -50,7 +50,7 @@ public interface IRealm
      * @return the modified realm
      * @throws UnknownRealmIdException when an unknown realm id is used
      */
-    public Realm modifyRealm(long realmId, String realmName)
+    Realm modifyRealm(long realmId, String realmName)
         throws UnknownRealmIdException;
 
     /**
@@ -58,5 +58,5 @@ public interface IRealm
      * 
      * @param realmId the id the realm to be deleted
      */
-    public void deleteRealm(long realmId);
+    void deleteRealm(long realmId);
 }

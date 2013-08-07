@@ -14,10 +14,17 @@
 package org.qeo.sms.rest.models;
 
 /**
- * 
+ * Enumeration representation of the different enrollment states in which a device can be.
  */
 public enum DeviceState {
-    CREATING, ENROLLED, REVOKED, CREATE_FAILED;
+    /** The device is not yet enrolled. An OTC might still be available to enroll this device. */
+    CREATING,
+    /** The device contacted the server, successfully enrolled a certificate and is Qeo ready. */
+    ENROLLED,
+    /** The device got revoked. It no longer can talk Qeo. */
+    REVOKED,
+    /** When the device failed to register itself with its OTC on the server. */
+    CREATE_FAILED;
 
     @Override
     public String toString()

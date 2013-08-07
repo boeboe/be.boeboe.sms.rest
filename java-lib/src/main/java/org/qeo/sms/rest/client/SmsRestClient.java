@@ -1,20 +1,3 @@
-package org.qeo.sms.rest.client;
-
-import java.net.URI;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
-import org.qeo.sms.rest.interfaces.IDevice;
-import org.qeo.sms.rest.interfaces.IRealm;
-import org.qeo.sms.rest.interfaces.IUser;
-import org.qeo.sms.rest.models.Device;
-import org.qeo.sms.rest.models.Realm;
-import org.qeo.sms.rest.models.User;
-
 /************** COPYRIGHT AND CONFIDENTIALITY INFORMATION *********************
  **                                                                          **
  ** Copyright (c) 2013 Technicolor                                           **
@@ -29,25 +12,48 @@ import org.qeo.sms.rest.models.User;
  **                                                                          **
  ******************************************************************************/
 
+package org.qeo.sms.rest.client;
+
+import java.net.URI;
+import java.util.ArrayList;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
+import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
+import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.interfaces.IDevice;
+import org.qeo.sms.rest.interfaces.IRealm;
+import org.qeo.sms.rest.interfaces.IUser;
+import org.qeo.sms.rest.models.Device;
+import org.qeo.sms.rest.models.Realm;
+import org.qeo.sms.rest.models.User;
+
 /**
- * 
+ * SMS Rest Client implementation.
  */
 public class SmsRestClient
     implements IRealm, IUser, IDevice
 {
-    private final static String BASE_URI = "http://join.qeodev.org:8080/qeo-rest-service/v1";
-    private final static String REALMS_URI = BASE_URI + "/realms";
+    private static final String BASE_URI = "http://join.qeodev.org:8080/qeo-rest-service/v1";
+    private static final String REALMS_URI = BASE_URI + "/realms";
+    private static final Log LOG = LogFactory.getLog("SmsRestClient");
 
     private final URI mRealmsUri;
 
     private final String mAccessToken;
 
+    /**
+     * Constructor the get a handle towards the SMS Client.
+     * 
+     * @param accessToken the OAUTH authentication token needed to authenticate
+     */
     public SmsRestClient(String accessToken)
     {
         mAccessToken = accessToken;
-        
         mRealmsUri = URI.create(REALMS_URI);
-
     }
 
     @Override
@@ -60,7 +66,7 @@ public class SmsRestClient
             realmsList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("realms"), Realm.class);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in getRealms", e);
         }
 
         return realmsList;
@@ -77,7 +83,7 @@ public class SmsRestClient
             return new Realm(jsonRealmResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in createRealm", e);
             return null;
         }
     }
@@ -93,7 +99,7 @@ public class SmsRestClient
             return new Realm(jsonRealmResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in modifyRealm", e);
             return null;
         }
     }
@@ -117,7 +123,7 @@ public class SmsRestClient
             usersList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("users"), User.class);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in getUsers", e);
         }
 
         return usersList;
@@ -136,7 +142,7 @@ public class SmsRestClient
             return new User(jsonUserResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in createUser", e);
             return null;
         }
     }
@@ -153,7 +159,7 @@ public class SmsRestClient
             return new User(jsonUserResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in modifyUser", e);
             return null;
         }
     }
@@ -178,7 +184,7 @@ public class SmsRestClient
             deviceList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("devices"), Device.class);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in getDevices", e);
         }
 
         return deviceList;
@@ -196,7 +202,7 @@ public class SmsRestClient
             deviceList = SmsRestUtils.getObjectArray(jsonRealms.getJSONArray("devices"), Device.class);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in getDevices", e);
         }
 
         return deviceList;
@@ -215,7 +221,7 @@ public class SmsRestClient
             return new Device(jsonDeviceResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in createDevice", e);
             return null;
         }
     }
@@ -233,7 +239,7 @@ public class SmsRestClient
             return new Device(jsonDeviceResult);
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in modifyDevice", e);
             return null;
         }
     }
@@ -244,13 +250,13 @@ public class SmsRestClient
     {
         URI deleteDeviceUri = URI.create(REALMS_URI + "/" + realmId + "/devices/" + deviceId);
         JSONObject deviceJsonDelete = new JSONObject();
-        
+
         try {
             deviceJsonDelete.put("user", userId);
             SmsRestUtils.execRestDeleteWithJson(mAccessToken, deleteDeviceUri, deviceJsonDelete);
         }
         catch (JSONException e) {
-            e.printStackTrace();
-        }       
+            LOG.error("JSONException occured in deleteDevice", e);
+        }
     }
 }

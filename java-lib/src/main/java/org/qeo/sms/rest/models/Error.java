@@ -21,11 +21,11 @@ public class Error
     private final int mStatus;
     private final int mCode;
     private final String mMessage;
-    
+
     /**
-     * @param mStatus
-     * @param Code
-     * @param Message
+     * @param status the status of the error
+     * @param code the code of the error
+     * @param message the message of the error
      */
     public Error(int status, int code, String message)
     {

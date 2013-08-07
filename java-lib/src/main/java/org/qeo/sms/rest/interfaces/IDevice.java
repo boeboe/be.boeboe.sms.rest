@@ -20,7 +20,7 @@ import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
 import org.qeo.sms.rest.models.Device;
 
 /**
- * 
+ * Interface defining the methods applicable on a Device.
  */
 public interface IDevice
 {
@@ -31,7 +31,7 @@ public interface IDevice
      * @param realmId the id of the realm
      * @return a list of Devices
      */
-    public ArrayList<Device> getDevices(long realmId);
+    ArrayList<Device> getDevices(long realmId);
 
     /**
      * Retrieve all devices from a certain user within a realm of a Qeo Administrator.
@@ -40,9 +40,11 @@ public interface IDevice
      * @param userId the id of the user
      * @return a list of Devices
      */
-    public ArrayList<Device> getDevices(long realmId, long userId);
-    
+    ArrayList<Device> getDevices(long realmId, long userId);
+
     /**
+     * Create a device within a certain realm for a certain user.
+     * 
      * @param realmId the id the realm where the device is added
      * @param userId the id the user of which the device is added
      * @param deviceName the name of the device to be added
@@ -50,10 +52,12 @@ public interface IDevice
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public Device createDevice(long realmId, long userId, String deviceName)
+    Device createDevice(long realmId, long userId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException;
 
     /**
+     * Modify a device within a certain realm for a certain user.
+     * 
      * @param realmId the id the realm where the device is modified
      * @param userId the id the user of which the device is modified
      * @param deviceId the id of the device to be modified
@@ -62,16 +66,18 @@ public interface IDevice
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
+    Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
         throws UnknownRealmIdException, UnknownRealmUserException;
 
     /**
+     * Delete a device within a certain realm for a certain user.
+     * 
      * @param realmId the id the realm where the device is deleted
      * @param userId the id the user of which the device is deleted
      * @param deviceId the id of the device to be deleted
      * @throws UnknownRealmIdException when an unknown realm id is used
      * @throws UnknownRealmUserException when an unknown realm - user combination is used
      */
-    public void deleteDevice(long realmId, long userId, long deviceId)
+    void deleteDevice(long realmId, long userId, long deviceId)
         throws UnknownRealmIdException, UnknownRealmUserException;
 }

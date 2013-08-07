@@ -32,9 +32,9 @@ public class Realm
     /**
      * Constructor to create a realm object.
      * 
-     * @param id
-     * @param type
-     * @param name
+     * @param id the id of the realm
+     * @param type the type of the realm (always "realm")
+     * @param name the name of the realm
      */
     public Realm(long id, String type, String name)
     {
@@ -49,7 +49,7 @@ public class Realm
      * { "name" : "Jos", "id" : 6575425569096907932, "type" : "realm" }
      * 
      * @param realmJson JSON representation of a realm
-     * @throws JSONException
+     * @throws JSONException when a JSON parsing exception occurred
      */
     public Realm(JSONObject realmJson)
         throws JSONException
@@ -87,11 +87,5 @@ public class Realm
     public String toString()
     {
         return "Realm [mId=" + mId + ", mType=" + mType + ", mName=" + mName + "]";
-    }
-
-    public JSONObject toJson()
-        throws JSONException
-    {
-        return new JSONObject().put("id", mId).put("type", mType).put("name", mName);
     }
 }

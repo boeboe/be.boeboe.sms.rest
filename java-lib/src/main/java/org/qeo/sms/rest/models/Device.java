@@ -15,6 +15,8 @@ package org.qeo.sms.rest.models;
 
 import java.text.ParseException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +25,8 @@ import org.json.JSONObject;
  */
 public class Device
 {
+    private static final Log LOG = LogFactory.getLog("Device");
+
     private final long mId;
     private final long mRealmId;
     private final long mUserId;
@@ -44,14 +48,14 @@ public class Device
     /**
      * Constructor to create a device object.
      * 
-     * @param id
-     * @param realmId
-     * @param userId
-     * @param type
-     * @param name
-     * @param state
-     * @param deviceId
-     * @param otc
+     * @param id the id of the device
+     * @param realmId the realmId where the device belongs to
+     * @param userId the userId to which the device belongs to
+     * @param type the type of the device (always "device")
+     * @param name the name of the device
+     * @param state the state for the device
+     * @param deviceId the deviceId of the device
+     * @param otc the OTC applicable for that device
      */
     public Device(long id, long realmId, long userId, String type, String name, DeviceState state, String deviceId,
         Otc otc)
@@ -72,9 +76,8 @@ public class Device
      * { "name" : "DeviceAdam1", "id" : 3222, "state" : "CREATING", "type" : "device", "realm" : 6575425569096907932,
      * "user" : 1643, "otc" : { ... }, "device_id" : ""
      * 
-     * @param userJson JSON representation of a device
-     * @throws JSONException
-     * @throws ParseException
+     * @param deviceJson JSON representation of a device
+     * @throws JSONException when a JSON parsing problem occurred
      */
     public Device(JSONObject deviceJson)
         throws JSONException
@@ -88,13 +91,13 @@ public class Device
         mDeviceId = deviceJson.getString(DEVICE_ID);
         mOtc = null;
 
-        // Enrolled and 
+        // The OTC part in JSON is only available in a certain DeviceSate.
         if (deviceJson.has(OTC)) {
             try {
                 mOtc = new Otc(deviceJson.getJSONObject(OTC));
             }
             catch (ParseException e) {
-                e.printStackTrace();
+                LOG.error("ParseException occured in Device", e);
             }
         }
         else {

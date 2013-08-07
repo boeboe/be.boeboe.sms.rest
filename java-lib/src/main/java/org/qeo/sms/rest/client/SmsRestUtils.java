@@ -22,6 +22,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpDelete;
@@ -40,11 +42,26 @@ import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
 
 /**
- * 
+ * Utility class with common methods used within SMS REST Client implementation.
  */
-public class SmsRestUtils
+public final class SmsRestUtils
 {
+    private static final Log LOG = LogFactory.getLog("SmsRestUtils");
 
+    /**
+     * Default empty private constructor for utility class.
+     */
+    private SmsRestUtils()
+    {
+    }
+
+    /**
+     * Perform a REST/HTTP GET.
+     * 
+     * @param accessToken the OAUTH authentication token
+     * @param uri the URI used within the REST call
+     * @return JSONObject the JSON object retrieved by the GET
+     */
     public static JSONObject execRestGet(String accessToken, URI uri)
     {
         final DefaultHttpClient httpClient;
@@ -67,11 +84,19 @@ public class SmsRestUtils
         }
         catch (Exception e) {
             httpClient.getConnectionManager().shutdown();
-            e.printStackTrace();
+            LOG.error("Exception occured in execRestGet", e);
             return null;
         }
     }
-    
+
+    /**
+     * Perform a REST/HTTP POST.
+     * 
+     * @param accessToken the OAUTH authentication token
+     * @param uri the URI used within the REST call
+     * @param json the JSON body to be posted
+     * @return JSONObject the JSON object retrieved by the POST
+     */
     public static JSONObject execRestPost(String accessToken, URI uri, JSONObject json)
     {
         final DefaultHttpClient httpClient;
@@ -97,12 +122,18 @@ public class SmsRestUtils
         }
         catch (Exception e) {
             httpClient.getConnectionManager().shutdown();
-            e.printStackTrace();
+            LOG.error("Exception occured in execRestPost", e);
             return null;
         }
 
     }
 
+    /**
+     * Perform a REST/HTTP DELETE.
+     * 
+     * @param accessToken the OAUTH authentication token
+     * @param uri the URI used within the REST call
+     */
     public static void execRestDelete(String accessToken, URI uri)
     {
         final DefaultHttpClient httpClient;
@@ -125,10 +156,17 @@ public class SmsRestUtils
         }
         catch (Exception e) {
             httpClient.getConnectionManager().shutdown();
-            e.printStackTrace();
+            LOG.error("Exception occured in execRestDelete", e);
         }
     }
 
+    /**
+     * Perform a REST/HTTP DELETE with a HTTP body (not standard !!!).
+     * 
+     * @param accessToken the OAUTH authentication token
+     * @param uri the URI used within the REST call
+     * @param json the JSON body to be attached to the HTTP DELETE
+     */
     public static void execRestDeleteWithJson(String accessToken, URI uri, JSONObject json)
     {
         final DefaultHttpClient httpClient;
@@ -152,11 +190,13 @@ public class SmsRestUtils
         }
         catch (Exception e) {
             httpClient.getConnectionManager().shutdown();
-            e.printStackTrace();
+            LOG.error("Exception occured in execRestDeleteWithJson", e);
         }
     }
 
     /**
+     * Analyze the JSON representation of the fault error returned on a certain REST Call and throw a proper exception.
+     * 
      * @param jsonError
      * @throws JSONException
      * @throws InvalidAuthTokenException
@@ -176,7 +216,7 @@ public class SmsRestUtils
             errorCode = jsonError.getInt("code");
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            LOG.error("JSONException occured in analyseJsonError", e);
         }
 
         switch (errorCode) {
@@ -193,7 +233,7 @@ public class SmsRestUtils
             case 4011:
                 throw new MissingAuthTokenException();
             default:
-                System.out.println("Unexpected error: " + jsonError.toString());
+                LOG.error("Unexpected error in analyseJsonError: " + jsonError.toString());
         }
     }
 
@@ -224,11 +264,12 @@ public class SmsRestUtils
     }
 
     /**
-     * A helper method to convert JSONArrays to ObjectArrays of Class clazz.
+     * A helper method to convert JSONArrays to an array of objects of Class clazz.
      * 
      * @param jsonArray the JSONArray to convert
+     * @param clazz the class of the target object for the JSON element
+     * @param <K> whatever, check style is buggy
      * @return clazzArray and array of Objects from type clazz
-     * @throws JSONException exception during JSON parsing
      */
     @SuppressWarnings("unchecked")
     public static <K> ArrayList<K> getObjectArray(JSONArray jsonArray, Class<K> clazz)
@@ -239,7 +280,7 @@ public class SmsRestUtils
                 result[i] = clazz.getConstructor(JSONObject.class).newInstance(jsonArray.getJSONObject(i));
             }
             catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Exception occured in getObjectArray", e);
             }
         }
         return new ArrayList<K>(Arrays.asList(result));

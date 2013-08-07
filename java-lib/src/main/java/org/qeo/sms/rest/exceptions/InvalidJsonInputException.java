@@ -21,6 +21,9 @@ public class InvalidJsonInputException
 {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Exception thrown when authorization token is invalid.
+     */
     public InvalidJsonInputException()
     {
         super("Input contains invalid json");

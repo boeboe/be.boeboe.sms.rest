@@ -22,19 +22,27 @@ import org.qeo.sms.rest.models.User;
 /**
  * 
  */
-public class SmsRestClientTest
+public final class SmsRestClientTest
 {
 
-    public final static String ACCESS_TOKEN = "45e3cea8135d0142a8da0b2c886c9750f5467c36";
+    /**
+     * Default empty constructor.
+     */
+    private SmsRestClientTest()
+    {
+    }
+
+    /** The OAUTH authentication token needed to use the SMS REST API . */
+    public static final String ACCESS_TOKEN = "45e3cea8135d0142a8da0b2c886c9750f5467c36";
 
     /**
-     * @param args
-     * @throws UnknownRealmUserException
-     * @throws UnknownRealmIdException
-     * @throws JSONException
+     * @param args command line arguments
+     * @throws UnknownRealmUserException OK
+     * @throws UnknownRealmIdException OK
+     * @throws JSONException OK
      */
     public static void main(String[] args)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws UnknownRealmIdException, UnknownRealmUserException, JSONException
     {
         SmsRestClient smsClient = new SmsRestClient(ACCESS_TOKEN);
         long realmId = Long.parseLong("2209845187177181091");
@@ -53,8 +61,6 @@ public class SmsRestClientTest
 
         // Realm realm = new Realm(123, "realm", "BartRealm");
         // System.out.println("realm == " + realm.toString());
-        // JSONObject realmJson = realm.toJson();
-        // Realm newRealm = new Realm(realmJson);
         // System.out.println("newRealm == " + newRealm.toString());
 
         // 6162717526657293560
@@ -86,7 +92,7 @@ public class SmsRestClientTest
         // }
         //
         // }
-        
+
         // try {
         // for (int i = 0; i < 10; i++) {
         // User user = smsClient.createUser(realmId, "TestUser_" + i);
@@ -97,7 +103,6 @@ public class SmsRestClientTest
         // }
         // }
         // catch (UnknownRealmIdException | UnknownRealmUserException e) {
-        // // TODO Auto-generated catch block
         // e.printStackTrace();
         // }
         //
@@ -106,7 +111,6 @@ public class SmsRestClientTest
         // smsClient.deleteUser(realmId, u.getId());
         // }
         // catch (UnknownRealmIdException | UnknownRealmUserException e) {
-        // // TODO Auto-generated catch block
         // e.printStackTrace();
         // }
         // }

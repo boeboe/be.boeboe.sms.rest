@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import org.qeo.sms.rest.models.Policy;
 
 /**
- * 
+ * Interface defining the methods applicable on a Policy.
  */
 public interface IPolicy
 {
@@ -26,14 +26,17 @@ public interface IPolicy
     /**
      * Retrieve the Policy of every User in the Realm of a Qeo Administrator.
      * 
+     * @param realmId the realmId
      * @return a list of Policies
      */
-    public ArrayList<Policy> getPolicies(long realmId);
+    ArrayList<Policy> getPolicies(long realmId);
 
     /**
      * Retrieve the Policy of a single User in the Realm of a Qeo Administrator.
      * 
+     * @param realmId the realmId
+     * @param userId the userId
      * @return the Policy for that user
      */
-    public Policy getPolicyUser(long realmId, long userId);
+    Policy getPolicyUser(long realmId, long userId);
 }
