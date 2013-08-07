@@ -40,6 +40,8 @@ import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
 import org.qeo.sms.rest.exceptions.MissingAuthTokenException;
 import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
 import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.models.ApiError;
+
 
 /**
  * Utility class with common methods used within SMS REST Client implementation.
@@ -210,30 +212,28 @@ public final class SmsRestUtils
         throws InvalidAuthTokenException, MaxRealmReachedException, UnknownRealmUserException, UnknownRealmIdException,
         MissingAuthTokenException, InvalidJsonInputException
     {
-
-        int errorCode = 0;
+        ApiError restApiError;
         try {
-            errorCode = jsonError.getInt("code");
+            restApiError = new ApiError(jsonError);
+            switch (restApiError.getCode()) {
+                case 4000:
+                    throw new InvalidJsonInputException();
+                case 4001:
+                    throw new MaxRealmReachedException();
+                case 4002:
+                    throw new UnknownRealmUserException();
+                case 4003:
+                    throw new UnknownRealmIdException();
+                case 4010:
+                    throw new InvalidAuthTokenException();
+                case 4011:
+                    throw new MissingAuthTokenException();
+                default:
+                    LOG.error("Unexpected error in analyseJsonError: " + restApiError.toString());
+            }
         }
         catch (JSONException e) {
             LOG.error("JSONException occured in analyseJsonError", e);
-        }
-
-        switch (errorCode) {
-            case 4000:
-                throw new InvalidJsonInputException();
-            case 4001:
-                throw new MaxRealmReachedException();
-            case 4002:
-                throw new UnknownRealmUserException();
-            case 4003:
-                throw new UnknownRealmIdException();
-            case 4010:
-                throw new InvalidAuthTokenException();
-            case 4011:
-                throw new MissingAuthTokenException();
-            default:
-                LOG.error("Unexpected error in analyseJsonError: " + jsonError.toString());
         }
     }
 

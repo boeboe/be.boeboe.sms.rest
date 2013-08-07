@@ -13,26 +13,49 @@
  ******************************************************************************/
 package org.qeo.sms.rest.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 
  */
-public class Error
+public class ApiError
 {
     private final int mStatus;
     private final int mCode;
     private final String mMessage;
+
+    private static final String STATUS = "status";
+    private static final String CODE = "code";
+    private static final String MESSAGE = "message";
 
     /**
      * @param status the status of the error
      * @param code the code of the error
      * @param message the message of the error
      */
-    public Error(int status, int code, String message)
+    public ApiError(int status, int code, String message)
     {
         super();
         mStatus = status;
         mCode = code;
         mMessage = message;
+    }
+
+    /**
+     * Constructor to create a error object from it's JSON representation.
+     * 
+     * {"status":...,"code":...,"message":"..."}
+     * 
+     * @param errorJson JSON representation of a REST API Error
+     * @throws JSONException when a JSON parsing exception occurred
+     */
+    public ApiError(JSONObject errorJson)
+        throws JSONException
+    {
+        mStatus = errorJson.getInt(STATUS);
+        mCode = errorJson.getInt(CODE);
+        mMessage = errorJson.getString(MESSAGE);
     }
 
     /**
@@ -57,5 +80,11 @@ public class Error
     public String getMessage()
     {
         return mMessage;
-    };
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ApiError [mStatus=" + mStatus + ", mCode=" + mCode + ", mMessage=" + mMessage + "]";
+    }
 }
