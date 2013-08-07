@@ -13,6 +13,8 @@
  ******************************************************************************/
 package org.qeo.sms.rest.models;
 
+import java.util.Locale;
+
 /**
  * Enumeration representation of the different enrollment states in which a device can be.
  */
@@ -31,6 +33,6 @@ public enum DeviceState {
     {
         // only capitalize the first letter
         String s = super.toString();
-        return s.substring(0, 1) + s.substring(1).toLowerCase();
+        return s.substring(0, 1) + s.substring(1).toLowerCase(Locale.ENGLISH);
     }
 }

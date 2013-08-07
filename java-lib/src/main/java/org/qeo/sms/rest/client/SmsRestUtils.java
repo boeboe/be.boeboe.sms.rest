@@ -19,11 +19,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpDelete;
@@ -242,29 +244,50 @@ public final class SmsRestUtils
      * 
      * @param response the HttpResponse object.
      * @return JSON representation of the response body.
-     * @throws IOException
-     * @throws JSONException
      */
     private static JSONObject responseToJson(HttpResponse response)
-        throws IOException, JSONException
     {
-        InputStream inputStream = response.getEntity().getContent();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        StringBuilder stringBuilder = new StringBuilder();
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
+            InputStream inputStream;
+            try {
+                inputStream = entity.getContent();
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                try {
+                    StringBuilder stringBuilder = new StringBuilder();
 
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            stringBuilder.append(line);
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line);
+                    }
+
+                    String output = stringBuilder.toString();
+                    JSONObject jsonReply = new JSONObject(output);
+
+                    inputStream.close();
+                    inputStreamReader.close();
+                    bufferedReader.close();
+                    return jsonReply;
+                }
+                catch (JSONException e1) {
+                    LOG.error("JSONException occured in responseToJson", e1);
+                }
+                finally {
+                    bufferedReader.close();
+                    inputStreamReader.close();
+                    inputStream.close();
+                }
+            }
+            catch (IllegalStateException e2) {
+                LOG.error("IllegalStateException occured in responseToJson", e2);
+            }
+            catch (IOException e3) {
+                LOG.error("IOException occured in responseToJson", e3);
+            }
+
         }
-
-        String output = stringBuilder.toString();
-        JSONObject jsonReply = new JSONObject(output);
-
-        inputStream.close();
-        inputStreamReader.close();
-        bufferedReader.close();
-        return jsonReply;
+        return null;
     }
 
     /**

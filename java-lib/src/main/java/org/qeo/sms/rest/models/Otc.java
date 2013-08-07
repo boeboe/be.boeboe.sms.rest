@@ -31,7 +31,6 @@ public class Otc
 
     private static final String CODE = "code";
     private static final String DATE = "date";
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     /**
      * Constructor to create a otc object.
@@ -42,7 +41,7 @@ public class Otc
     public Otc(String code, Date date)
     {
         mCode = code;
-        mDate = date;
+        mDate = (Date) date.clone();
     }
 
     /**
@@ -57,8 +56,9 @@ public class Otc
     public Otc(JSONObject otcJson)
         throws JSONException, ParseException
     {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         mCode = otcJson.getString(CODE);
-        mDate = DATE_FORMAT.parse(otcJson.getString(DATE));
+        mDate = formatter.parse(otcJson.getString(DATE));
     }
 
     /**
@@ -74,7 +74,7 @@ public class Otc
      */
     public Date getdate()
     {
-        return mDate;
+        return (Date) mDate.clone();
     }
 
     @Override
