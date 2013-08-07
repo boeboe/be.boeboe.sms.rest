@@ -14,18 +14,22 @@
 package org.qeo.sms.rest.exceptions;
 
 /**
- * Exception thrown when authorization token is invalid.
+ * Exception thrown when a certain REST call returned with an error code.
  */
-public class InvalidAuthTokenException
+public class RestApiException
     extends Exception
 {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Exception thrown when authorization token is invalid.
+     * Exception thrown when a certain REST call returned with an error code.
+     * 
+     * @param status this parameter follows the HTTP error code returned by the server
+     * @param code this parameter provides a more fine grained error specification
+     * @param message human readable string associated with the error code
      */
-    public InvalidAuthTokenException()
+    public RestApiException(int status, int code, String message)
     {
-        super("Invalid authorization token");
+        super("RestApiException (status:" + status + ",code:" + code + ") occured: " + message);
     }
 }

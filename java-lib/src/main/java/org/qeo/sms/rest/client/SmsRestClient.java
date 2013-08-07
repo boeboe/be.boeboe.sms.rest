@@ -21,9 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.interfaces.IDevice;
 import org.qeo.sms.rest.interfaces.IRealm;
 import org.qeo.sms.rest.interfaces.IUser;
@@ -58,6 +56,7 @@ public class SmsRestClient
 
     @Override
     public ArrayList<Realm> getRealms()
+        throws RestApiException
     {
         ArrayList<Realm> realmsList = new ArrayList<Realm>();
         JSONObject jsonRealms = SmsRestUtils.execRestGet(mAccessToken, mRealmsUri);
@@ -74,7 +73,7 @@ public class SmsRestClient
 
     @Override
     public Realm createRealm(String realmName)
-        throws MaxRealmReachedException
+        throws RestApiException
     {
         JSONObject realmJsonCreate = new JSONObject();
         try {
@@ -90,7 +89,7 @@ public class SmsRestClient
 
     @Override
     public Realm modifyRealm(long realmId, String realmName)
-        throws UnknownRealmIdException
+        throws RestApiException
     {
         JSONObject realmJsonModify = new JSONObject();
         try {
@@ -106,6 +105,7 @@ public class SmsRestClient
 
     @Override
     public void deleteRealm(long realmId)
+        throws RestApiException
     {
         URI deleteRealmUri = URI.create(REALMS_URI + "/" + realmId);
         SmsRestUtils.execRestDelete(mAccessToken, deleteRealmUri);
@@ -113,6 +113,7 @@ public class SmsRestClient
 
     @Override
     public ArrayList<User> getUsers(long realmId)
+        throws RestApiException
     {
         ArrayList<User> usersList = new ArrayList<User>();
 
@@ -131,7 +132,7 @@ public class SmsRestClient
 
     @Override
     public User createUser(long realmId, String userName)
-        throws UnknownRealmIdException
+        throws RestApiException
     {
         URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
         JSONObject userJsonCreate = new JSONObject();
@@ -149,7 +150,7 @@ public class SmsRestClient
 
     @Override
     public User modifyUser(long realmId, long userId, String userName)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws RestApiException
     {
         URI mUsersUri = URI.create(REALMS_URI + "/" + realmId + "/users");
         JSONObject userJsonModify = new JSONObject();
@@ -166,7 +167,7 @@ public class SmsRestClient
 
     @Override
     public void deleteUser(long realmId, long userId)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws RestApiException
     {
         URI deleteUserUri = URI.create(REALMS_URI + "/" + realmId + "/users/" + userId);
         SmsRestUtils.execRestDelete(mAccessToken, deleteUserUri);
@@ -174,6 +175,7 @@ public class SmsRestClient
 
     @Override
     public ArrayList<Device> getDevices(long realmId)
+        throws RestApiException
     {
         ArrayList<Device> deviceList = new ArrayList<Device>();
 
@@ -192,6 +194,7 @@ public class SmsRestClient
 
     @Override
     public ArrayList<Device> getDevices(long realmId, long userId)
+        throws RestApiException
     {
         ArrayList<Device> deviceList = new ArrayList<Device>();
 
@@ -210,7 +213,7 @@ public class SmsRestClient
 
     @Override
     public Device createDevice(long realmId, long userId, String deviceName)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws RestApiException
     {
         URI mDevicesUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
         JSONObject deviceJsonCreate = new JSONObject();
@@ -229,7 +232,7 @@ public class SmsRestClient
 
     @Override
     public Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws RestApiException
     {
         URI mDevicesUri = URI.create(REALMS_URI + "/" + realmId + "/devices");
         JSONObject deviceJsonModify = new JSONObject();
@@ -246,7 +249,7 @@ public class SmsRestClient
 
     @Override
     public void deleteDevice(long realmId, long userId, long deviceId)
-        throws UnknownRealmIdException, UnknownRealmUserException
+        throws RestApiException
     {
         URI deleteDeviceUri = URI.create(REALMS_URI + "/" + realmId + "/devices/" + deviceId);
         JSONObject deviceJsonDelete = new JSONObject();

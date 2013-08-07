@@ -17,7 +17,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -36,12 +39,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.qeo.sms.rest.exceptions.InvalidAuthTokenException;
-import org.qeo.sms.rest.exceptions.InvalidJsonInputException;
-import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
-import org.qeo.sms.rest.exceptions.MissingAuthTokenException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.ApiError;
 
 
@@ -65,8 +63,10 @@ public final class SmsRestUtils
      * @param accessToken the OAUTH authentication token
      * @param uri the URI used within the REST call
      * @return JSONObject the JSON object retrieved by the GET
+     * @throws RestApiException when the REST API returned a failure
      */
     public static JSONObject execRestGet(String accessToken, URI uri)
+        throws RestApiException
     {
         final DefaultHttpClient httpClient;
         httpClient = new DefaultHttpClient();
@@ -75,8 +75,9 @@ public final class SmsRestUtils
         request.addHeader("Accept", "application/json");
         request.addHeader("Authorization", "Bearer " + accessToken);
 
+        HttpResponse response;
         try {
-            HttpResponse response = httpClient.execute(request);
+            response = httpClient.execute(request);
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 JSONObject jsonError = responseToJson(response);
                 analyseJsonError(jsonError);
@@ -86,11 +87,16 @@ public final class SmsRestUtils
             httpClient.getConnectionManager().shutdown();
             return json;
         }
-        catch (Exception e) {
-            httpClient.getConnectionManager().shutdown();
-            LOG.error("Exception occured in execRestGet", e);
-            return null;
+        catch (ClientProtocolException e1) {
+            LOG.error("ClientProtocolException occured in execRestGet", e1);
         }
+        catch (IOException e2) {
+            LOG.error("IOException occured in execRestGet", e2);
+        }
+
+        httpClient.getConnectionManager().shutdown();
+        LOG.error("Problem occured in execRestGet");
+        return null;
     }
 
     /**
@@ -100,8 +106,10 @@ public final class SmsRestUtils
      * @param uri the URI used within the REST call
      * @param json the JSON body to be posted
      * @return JSONObject the JSON object retrieved by the POST
+     * @throws RestApiException when the REST API returned a failure
      */
     public static JSONObject execRestPost(String accessToken, URI uri, JSONObject json)
+        throws RestApiException
     {
         final DefaultHttpClient httpClient;
         httpClient = new DefaultHttpClient();
@@ -124,12 +132,19 @@ public final class SmsRestUtils
             httpClient.getConnectionManager().shutdown();
             return jsonReply;
         }
-        catch (Exception e) {
-            httpClient.getConnectionManager().shutdown();
-            LOG.error("Exception occured in execRestPost", e);
-            return null;
+        catch (UnsupportedEncodingException e1) {
+            LOG.error("UnsupportedEncodingException occured in execRestPost", e1);
+        }
+        catch (ClientProtocolException e2) {
+            LOG.error("ClientProtocolException occured in execRestPost", e2);
+        }
+        catch (IOException e3) {
+            LOG.error("IOException occured in execRestPost", e3);
         }
 
+        httpClient.getConnectionManager().shutdown();
+        LOG.error("Problem occured in execRestPost");
+        return null;
     }
 
     /**
@@ -137,8 +152,10 @@ public final class SmsRestUtils
      * 
      * @param accessToken the OAUTH authentication token
      * @param uri the URI used within the REST call
+     * @throws RestApiException when the REST API returned a failure
      */
     public static void execRestDelete(String accessToken, URI uri)
+        throws RestApiException
     {
         final DefaultHttpClient httpClient;
         httpClient = new DefaultHttpClient();
@@ -147,21 +164,24 @@ public final class SmsRestUtils
         delete.setHeader("Content-type", "application/json");
         delete.addHeader("Authorization", "Bearer " + accessToken);
 
+        HttpResponse response;
         try {
-            HttpResponse response = httpClient.execute(delete);
+            response = httpClient.execute(delete);
             int status = response.getStatusLine().getStatusCode();
 
             if (status != HttpStatus.SC_OK) {
                 JSONObject jsonError = responseToJson(response);
                 analyseJsonError(jsonError);
             }
+        }
+        catch (ClientProtocolException e1) {
+            LOG.error("ClientProtocolException occured in execRestDelete", e1);
+        }
+        catch (IOException e2) {
+            LOG.error("IOException occured in execRestDelete", e2);
+        }
 
-            httpClient.getConnectionManager().shutdown();
-        }
-        catch (Exception e) {
-            httpClient.getConnectionManager().shutdown();
-            LOG.error("Exception occured in execRestDelete", e);
-        }
+        httpClient.getConnectionManager().shutdown();
     }
 
     /**
@@ -170,8 +190,10 @@ public final class SmsRestUtils
      * @param accessToken the OAUTH authentication token
      * @param uri the URI used within the REST call
      * @param json the JSON body to be attached to the HTTP DELETE
+     * @throws RestApiException when the REST API returned a failure
      */
     public static void execRestDeleteWithJson(String accessToken, URI uri, JSONObject json)
+        throws RestApiException
     {
         final DefaultHttpClient httpClient;
         httpClient = new DefaultHttpClient();
@@ -189,50 +211,33 @@ public final class SmsRestUtils
                 JSONObject jsonError = responseToJson(response);
                 analyseJsonError(jsonError);
             }
+        }
+        catch (UnsupportedEncodingException e1) {
+            LOG.error("UnsupportedEncodingException occured in execRestDeleteWithJson", e1);
+        }
+        catch (ClientProtocolException e2) {
+            LOG.error("ClientProtocolException occured in execRestDeleteWithJson", e2);
+        }
+        catch (IOException e3) {
+            LOG.error("IOException occured in execRestDeleteWithJson", e3);
+        }
 
-            httpClient.getConnectionManager().shutdown();
-        }
-        catch (Exception e) {
-            httpClient.getConnectionManager().shutdown();
-            LOG.error("Exception occured in execRestDeleteWithJson", e);
-        }
+        httpClient.getConnectionManager().shutdown();
     }
 
     /**
      * Analyze the JSON representation of the fault error returned on a certain REST Call and throw a proper exception.
      * 
      * @param jsonError
-     * @throws JSONException
-     * @throws InvalidAuthTokenException
-     * @throws MaxRealmReachedException
-     * @throws UnknownRealmUserException
-     * @throws UnknownRealmIdException
-     * @throws MissingAuthTokenException
-     * @throws InvalidJsonInputException
+     * @throws RestApiException when a Rest API error value is returned
      */
     private static void analyseJsonError(JSONObject jsonError)
-        throws InvalidAuthTokenException, MaxRealmReachedException, UnknownRealmUserException, UnknownRealmIdException,
-        MissingAuthTokenException, InvalidJsonInputException
+        throws RestApiException
     {
         ApiError restApiError;
         try {
             restApiError = new ApiError(jsonError);
-            switch (restApiError.getCode()) {
-                case 4000:
-                    throw new InvalidJsonInputException();
-                case 4001:
-                    throw new MaxRealmReachedException();
-                case 4002:
-                    throw new UnknownRealmUserException();
-                case 4003:
-                    throw new UnknownRealmIdException();
-                case 4010:
-                    throw new InvalidAuthTokenException();
-                case 4011:
-                    throw new MissingAuthTokenException();
-                default:
-                    LOG.error("Unexpected error in analyseJsonError: " + restApiError.toString());
-            }
+            throw new RestApiException(restApiError.getStatus(), restApiError.getCode(), restApiError.getMessage());
         }
         catch (JSONException e) {
             LOG.error("JSONException occured in analyseJsonError", e);
@@ -306,8 +311,26 @@ public final class SmsRestUtils
             try {
                 result[i] = clazz.getConstructor(JSONObject.class).newInstance(jsonArray.getJSONObject(i));
             }
-            catch (Exception e) {
-                LOG.error("Exception occured in getObjectArray", e);
+            catch (InstantiationException e1) {
+                LOG.error("InstantiationException occured in getObjectArray", e1);
+            }
+            catch (IllegalAccessException e2) {
+                LOG.error("IllegalAccessException occured in getObjectArray", e2);
+            }
+            catch (IllegalArgumentException e3) {
+                LOG.error("IllegalArgumentException occured in getObjectArray", e3);
+            }
+            catch (InvocationTargetException e4) {
+                LOG.error("InvocationTargetException occured in getObjectArray", e4);
+            }
+            catch (NoSuchMethodException e5) {
+                LOG.error("NoSuchMethodException occured in getObjectArray", e5);
+            }
+            catch (SecurityException e6) {
+                LOG.error("SecurityException occured in getObjectArray", e6);
+            }
+            catch (JSONException e7) {
+                LOG.error("JSONException occured in getObjectArray", e7);
             }
         }
         return new ArrayList<K>(Arrays.asList(result));

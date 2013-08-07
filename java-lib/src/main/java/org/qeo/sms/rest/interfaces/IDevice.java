@@ -15,8 +15,7 @@ package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.Device;
 
 /**
@@ -30,8 +29,10 @@ public interface IDevice
      * 
      * @param realmId the id of the realm
      * @return a list of Devices
+     * @throws RestApiException when an error occurred
      */
-    ArrayList<Device> getDevices(long realmId);
+    ArrayList<Device> getDevices(long realmId)
+        throws RestApiException;
 
     /**
      * Retrieve all devices from a certain user within a realm of a Qeo Administrator.
@@ -39,8 +40,10 @@ public interface IDevice
      * @param realmId the id of the realm
      * @param userId the id of the user
      * @return a list of Devices
+     * @throws RestApiException when an error occurred
      */
-    ArrayList<Device> getDevices(long realmId, long userId);
+    ArrayList<Device> getDevices(long realmId, long userId)
+        throws RestApiException;
 
     /**
      * Create a device within a certain realm for a certain user.
@@ -49,11 +52,10 @@ public interface IDevice
      * @param userId the id the user of which the device is added
      * @param deviceName the name of the device to be added
      * @return the new device
-     * @throws UnknownRealmIdException when an unknown realm id is used
-     * @throws UnknownRealmUserException when an unknown realm - user combination is used
+     * @throws RestApiException when an error occurred
      */
     Device createDevice(long realmId, long userId, String deviceName)
-        throws UnknownRealmIdException, UnknownRealmUserException;
+        throws RestApiException;
 
     /**
      * Modify a device within a certain realm for a certain user.
@@ -63,11 +65,10 @@ public interface IDevice
      * @param deviceId the id of the device to be modified
      * @param deviceName the new name of the modified device+
      * @return the modified device
-     * @throws UnknownRealmIdException when an unknown realm id is used
-     * @throws UnknownRealmUserException when an unknown realm - user combination is used
+     * @throws RestApiException when an error occurred
      */
     Device modifyDevice(long realmId, long userId, long deviceId, String deviceName)
-        throws UnknownRealmIdException, UnknownRealmUserException;
+        throws RestApiException;
 
     /**
      * Delete a device within a certain realm for a certain user.
@@ -75,9 +76,8 @@ public interface IDevice
      * @param realmId the id the realm where the device is deleted
      * @param userId the id the user of which the device is deleted
      * @param deviceId the id of the device to be deleted
-     * @throws UnknownRealmIdException when an unknown realm id is used
-     * @throws UnknownRealmUserException when an unknown realm - user combination is used
+     * @throws RestApiException when an error occurred
      */
     void deleteDevice(long realmId, long userId, long deviceId)
-        throws UnknownRealmIdException, UnknownRealmUserException;
+        throws RestApiException;
 }

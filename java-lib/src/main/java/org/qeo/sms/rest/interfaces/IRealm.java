@@ -15,8 +15,7 @@ package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
-import org.qeo.sms.rest.exceptions.MaxRealmReachedException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.Realm;
 
 /**
@@ -29,18 +28,20 @@ public interface IRealm
      * Retrieve all realms of a Qeo administrator.
      * 
      * @return a list of Realms
+     * @throws RestApiException when an error occurred
      */
-    ArrayList<Realm> getRealms();
+    ArrayList<Realm> getRealms()
+        throws RestApiException;
 
     /**
      * Create a single realm of a Qeo administrator.
      * 
      * @param realmName the name you want to assign to the realm
      * @return the new realm
-     * @throws MaxRealmReachedException when the maximum number of realms (25) is reached
+     * @throws RestApiException when an error occurred
      */
     Realm createRealm(String realmName)
-        throws MaxRealmReachedException;
+        throws RestApiException;
 
     /**
      * Modify a single realm of a Qeo administrator.
@@ -48,15 +49,17 @@ public interface IRealm
      * @param realmId the id the realm to be modified
      * @param realmName the name you want to assign to the realm
      * @return the modified realm
-     * @throws UnknownRealmIdException when an unknown realm id is used
+     * @throws RestApiException when an error occurred
      */
     Realm modifyRealm(long realmId, String realmName)
-        throws UnknownRealmIdException;
+        throws RestApiException;
 
     /**
      * Delete a single realm of a Qeo administrator.
      * 
      * @param realmId the id the realm to be deleted
+     * @throws RestApiException when an error occurred
      */
-    void deleteRealm(long realmId);
+    void deleteRealm(long realmId)
+        throws RestApiException;
 }

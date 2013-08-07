@@ -15,6 +15,7 @@ package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.Policy;
 
 /**
@@ -28,8 +29,10 @@ public interface IPolicy
      * 
      * @param realmId the realmId
      * @return a list of Policies
+     * @throws RestApiException when an error occurred
      */
-    ArrayList<Policy> getPolicies(long realmId);
+    ArrayList<Policy> getPolicies(long realmId)
+        throws RestApiException;
 
     /**
      * Retrieve the Policy of a single User in the Realm of a Qeo Administrator.
@@ -37,6 +40,8 @@ public interface IPolicy
      * @param realmId the realmId
      * @param userId the userId
      * @return the Policy for that user
+     * @throws RestApiException when an error occurred
      */
-    Policy getPolicyUser(long realmId, long userId);
+    Policy getPolicyUser(long realmId, long userId)
+        throws RestApiException;
 }

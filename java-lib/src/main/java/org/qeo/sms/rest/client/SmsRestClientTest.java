@@ -13,9 +13,7 @@
  ******************************************************************************/
 package org.qeo.sms.rest.client;
 
-import org.json.JSONException;
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.Device;
 import org.qeo.sms.rest.models.User;
 
@@ -37,12 +35,10 @@ public final class SmsRestClientTest
 
     /**
      * @param args command line arguments
-     * @throws UnknownRealmUserException OK
-     * @throws UnknownRealmIdException OK
-     * @throws JSONException OK
+     * @throws RestApiException when the REST API returned an error
      */
     public static void main(String[] args)
-        throws UnknownRealmIdException, UnknownRealmUserException, JSONException
+        throws RestApiException
     {
         SmsRestClient smsClient = new SmsRestClient(ACCESS_TOKEN);
         long realmId = Long.parseLong("2209845187177181091");

@@ -15,8 +15,7 @@ package org.qeo.sms.rest.interfaces;
 
 import java.util.ArrayList;
 
-import org.qeo.sms.rest.exceptions.UnknownRealmIdException;
-import org.qeo.sms.rest.exceptions.UnknownRealmUserException;
+import org.qeo.sms.rest.exceptions.RestApiException;
 import org.qeo.sms.rest.models.User;
 
 /**
@@ -30,8 +29,10 @@ public interface IUser
      * 
      * @param realmId the realmId
      * @return a list of Users
+     * @throws RestApiException when an error occurred
      */
-    ArrayList<User> getUsers(long realmId);
+    ArrayList<User> getUsers(long realmId)
+        throws RestApiException;
 
     /**
      * Create a user within a certain realm.
@@ -39,10 +40,10 @@ public interface IUser
      * @param realmId the id the realm where the user gets created
      * @param userName the name of the new user
      * @return the new user
-     * @throws UnknownRealmIdException when an unknown realm id is used
+     * @throws RestApiException when an error occurred
      */
     User createUser(long realmId, String userName)
-        throws UnknownRealmIdException;
+        throws RestApiException;
 
     /**
      * Modify a user within a certain realm.
@@ -51,20 +52,18 @@ public interface IUser
      * @param userId the id of the user
      * @param userName the new name of the existing user
      * @return the modified user
-     * @throws UnknownRealmIdException when an unknown realm id is used
-     * @throws UnknownRealmUserException when an unknown realm - user combination is used
+     * @throws RestApiException when an error occurred
      */
     User modifyUser(long realmId, long userId, String userName)
-        throws UnknownRealmIdException, UnknownRealmUserException;
+        throws RestApiException;
 
     /**
      * Delete a user within a certain realm.
      * 
      * @param realmId the id the realm where the user gets deleted
      * @param userId the id of the user
-     * @throws UnknownRealmIdException when an unknown realm id is used
-     * @throws UnknownRealmUserException when an unknown realm - user combination is used
+     * @throws RestApiException when an error occurred
      */
     void deleteUser(long realmId, long userId)
-        throws UnknownRealmIdException, UnknownRealmUserException;
+        throws RestApiException;
 }
