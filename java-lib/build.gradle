@@ -1,9 +1,9 @@
+ext.findbugsHtml = true
+
 apply plugin: 'java'
-//The emma.gradle file is needed to be able to check for code coverage.
 apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/emma.gradle'
-//The checkstyle.gradle file is needed to configure checkstyle with the correct configuration file.
 apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/checkstyle.gradle'
-//Apply plugins.
+apply from: (System.properties['qeoGradleHelper'] ? System.properties['qeoGradleHelper'] : 'http://gitolite.edegem.eu.thmulti.com/qeo/gradle-helper.git/plain') + '/findbugs.gradle'
 apply plugin: 'findbugs'
 apply plugin: 'eclipse'
 

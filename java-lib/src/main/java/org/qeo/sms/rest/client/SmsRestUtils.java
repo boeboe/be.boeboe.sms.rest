@@ -260,6 +260,10 @@ public final class SmsRestUtils
 
         String output = stringBuilder.toString();
         JSONObject jsonReply = new JSONObject(output);
+
+        inputStream.close();
+        inputStreamReader.close();
+        bufferedReader.close();
         return jsonReply;
     }
 
