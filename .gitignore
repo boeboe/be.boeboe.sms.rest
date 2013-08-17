@@ -11,3 +11,7 @@ eclipse/
 output/
 java-lib/build/
 
+*.class
+*.jar
+*.war
+*.ear
